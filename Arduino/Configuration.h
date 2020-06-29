@@ -59,6 +59,7 @@
 #pragma once
 #include <Arduino.h>
 #include <Servo.h>
+#include <ArduinoJson.h>
 // Set the PING PONG Test and Times
 const String Ping("printerVersion");
 const String Pong("BraillePrinter Version.123\r\n");
@@ -67,34 +68,34 @@ const int8_t Ping_Pong_Limit_Times = 2;
 // Set the Ordinary PIN.
 const uint8_t Pin_LED_ON_BOARD = 13;
 // Set the Limited Switch Pin.
-const uint8_t Pin_Limited_Switch_Paper_Feed_UP = 19;
+const uint8_t Pin_Limited_Switch_Paper_Feed_UP = 15;
 const uint8_t Pin_Limited_Switch_Probe_Propulsion = 18;
-const uint8_t Pin_Limited_Switch_Press_Paper = 15;
+const uint8_t Pin_Limited_Switch_Press_Paper = 19;
 // Set the Stepper Motors' PIN.
 // Paper_Feed Group
-const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_En = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_Dir = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_Step = 99;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_En = 38;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_Dir = 55;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_UP_Step = 54;
 // A Group
-const uint8_t Pin_Stepper_Motor_Paper_Feed_A_En = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_A_Dir = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_A_Step = 99;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_A_En = 56;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_A_Dir = 61;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_A_Step = 60;
 // B Group
-const uint8_t Pin_Stepper_Motor_Paper_Feed_B_En = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_B_Dir = 99;
-const uint8_t Pin_Stepper_Motor_Paper_Feed_B_Step = 99;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_B_En = 62;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_B_Dir = 48;
+const uint8_t Pin_Stepper_Motor_Paper_Feed_B_Step = 46;
 // Print Probe Propulsion Group
-const uint8_t Pin_Stepper_Motor_Probe_Propulsion_En = 99;
-const uint8_t Pin_Stepper_Motor_Probe_Propulsion_Dir = 99;
-const uint8_t Pin_Stepper_Motor_Probe_Propulsion_Step = 99;
+const uint8_t Pin_Stepper_Motor_Probe_Propulsion_En = 24;
+const uint8_t Pin_Stepper_Motor_Probe_Propulsion_Dir = 28;
+const uint8_t Pin_Stepper_Motor_Probe_Propulsion_Step = 26;
 // Press Paper Group
-const uint8_t Pin_Stepper_Motor_Press_Paper_En = 99;
-const uint8_t Pin_Stepper_Motor_Press_Paper_Dir = 99;
-const uint8_t Pin_Stepper_Motor_Press_Paper_Step = 99;
+const uint8_t Pin_Stepper_Motor_Press_Paper_En = 30;
+const uint8_t Pin_Stepper_Motor_Press_Paper_Dir = 34;
+const uint8_t Pin_Stepper_Motor_Press_Paper_Step = 36;
 
 // Set the Print Probe Servo's Pin.
 // This Pin must support PWM. PWM Pin on board with ~; For example ~11
-const uint8_t Pin_Servo_Print_Probe = 99;
+const uint8_t Pin_Servo_Print_Probe = 11;
 // =============================================
 // Set the Serials' Bit rate
 const unsigned long Serial_Zero_Bit_Rate = 115200;
@@ -102,43 +103,46 @@ const unsigned long Serial_Zero_Bit_Rate = 115200;
 // Recommend 800; At least "HIGH"+"LOW">=400 AND ("HIGH">=20 OR "LOW">=20)
 const uint8_t Stepper_Motor_Paper_Feed_UP_Initialize_Dir = HIGH;
 const uint8_t Stepper_Motor_Paper_Feed_UP_Work_Dir = LOW;
-const uint32_t Stepper_Motor_Paper_Feed_UP_Loop_Times = 99999;
-const uint32_t Stepper_Motor_Paper_Feed_Up_A_B_Loop_Times = 3000;
+const uint32_t Stepper_Motor_Paper_Feed_UP_Loop_Times = 0;
+const uint32_t Stepper_Motor_Paper_Feed_Up_A_B_Loop_Times = 4000;
 const uint32_t Stepper_Motor_Paper_Feed_UP_HIGH_Dealyms = 800;
 const uint32_t Stepper_Motor_Paper_Feed_UP_LOW_Dealyms = 800;
 // Feed Paper Group
-const uint8_t Stepper_Motor_Paper_Feed_Work_Dir = HIGH;
-const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Line = 99999;
-const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Top = 99999;
-const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Bottom = 99999;
-const uint32_t Stepper_Motor_Paper_Feed_HIGH_Dealyms = 800;
-const uint32_t Stepper_Motor_Paper_Feed_LOW_Dealyms = 800;
+const uint8_t Stepper_Motor_Paper_Feed_A_Work_Dir = HIGH;
+const uint8_t Stepper_Motor_Paper_Feed_B_Work_Dir = LOW;
+const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Line = 749;
+const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Top = 1000;
+const uint32_t Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Bottom = 1000;
+const uint32_t Stepper_Motor_Paper_Feed_HIGH_Dealyms = 400;
+const uint32_t Stepper_Motor_Paper_Feed_LOW_Dealyms = 400;
 // Print Probe Group
 const uint8_t Stepper_Motor_Probe_Initialize_Dir = HIGH;
 const uint8_t Stepper_Motor_Probe_Work_Dir = LOW;
-const uint32_t Stepper_Motor_Probe_Loop_Times_Character_Point = 99999;
-const uint32_t Stepper_Motor_Probe_Loop_Times_Character_Word = 99999;
-const uint32_t Stepper_Motor_Probe_Loop_Times_Margin_Page_Left = 99999;
-const uint32_t Stepper_Motor_Probe_Loop_Times_Margin_Page_Right = 99999;
-const uint32_t Stepper_Motor_Probe_HIGH_Dealyms = 800;
-const uint32_t Stepper_Motor_Probe_LOW_Dealyms = 800;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Character_Point = 360;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Character_Word = 518;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Margin_Page_Left = 1000;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Margin_Page_Right = 1000;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Initialize_Position = 2500;
+const uint32_t Stepper_Motor_Probe_HIGH_Dealyms = 400;
+const uint32_t Stepper_Motor_Probe_LOW_Dealyms = 400;
 // Synchronize
-const uint32_t Stepper_Motor_Probe_Loop_Times_Synchronize = 5000;
+const uint32_t Stepper_Motor_Probe_Loop_Times_Synchronize = 250; 
+const unsigned long Probe_Delay = 500;
 // Set the Print Probe Servo's Default Position.
 // The value range from 0 to 180.
 // Each block need 22
 const int Servo_Print_Probe_Default_Position = 0;
-const int Servo_Print_Probe_One_Position = 22;
-const int Servo_Print_Probe_Two_Position = 44;
-const int Servo_Print_Probe_Three_Position = 66;
-const int Servo_Print_Probe_Four_Position = 88;
-const int Servo_Print_Probe_Five_Position = 110;
-const int Servo_Print_Probe_Six_Position = 132;
-const int Servo_Print_Probe_Seven_Position = 154;
+const int Servo_Print_Probe_One_Position = 23;
+const int Servo_Print_Probe_Two_Position = 49;
+const int Servo_Print_Probe_Three_Position = 74;
+const int Servo_Print_Probe_Four_Position = 100;
+const int Servo_Print_Probe_Five_Position = 126;
+const int Servo_Print_Probe_Six_Position = 145;
+const int Servo_Print_Probe_Seven_Position = 165;
 // =============================================
 // Set the Printer's Instruction
 // Instruction in Print Mode
-//const uint8_t Print_Character_Point_Zero = 0x81;
+const uint8_t Print_Character_Point_Zero = 0x81;
 const uint8_t Print_Character_Point_One = 0x82;
 const uint8_t Print_Character_Point_Two = 0x83;
 const uint8_t Print_Character_Point_Three = 0x84;
@@ -154,7 +158,6 @@ const uint8_t Print_Margin_Page_Top = 0x91;
 const uint8_t Print_Margin_Page_Bottom = 0x92;
 const uint8_t Print_Margin_Page_Left = 0x93;
 const uint8_t Print_Margin_Page_Right = 0x94;
-
 // Instruction in Configuration Mode
 const uint8_t Adjust_Space_Between_Character_Point = 0xA1;
 const uint8_t Adjust_Space_Between_Character_Word = 0xA2;

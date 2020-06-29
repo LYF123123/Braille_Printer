@@ -30,10 +30,10 @@ private:
 	bool Limited_Switch_Paper_Feed_UP_Trigged()const;
 	bool Limited_Switch_Probe_Propulsion_Trigged()const;
 	bool Limited_Switch_Press_Paper_Trigged()const;
-	void Change_Probe_Direction();
+	//void Change_Probe_Direction();
 	void Probe_Propulsion_Synchronize()const;
 	void Press_Paper_Synchronize()const;
-	void Braille_Printer_Machine_Print_Character_Point_Zero()const; // Used when we print a Character Point
+	void Braille_Printer_Machine_Character_Point_Zero()const; // Used when we print a Character Point
 	// TODO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Other Motors' Events
 public:
@@ -41,6 +41,7 @@ public:
 	Braille_Printer_Machine();
 	// Used for Print Mode
 	// 1/2 +point +1/2
+	void Braille_Printer_Machine_Print_Character_Point_Zero()const; // Used when we print a Character Point
 	void Braille_Printer_Machine_Print_Character_Point_One()const; // Used when we print a Character Point
 	void Braille_Printer_Machine_Print_Character_Point_Two()const; // Used when we print a Character Point
 	void Braille_Printer_Machine_Print_Character_Point_Three()const; // Used when we print a Character Point

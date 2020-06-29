@@ -33,16 +33,16 @@ void Braille_Printer_Machine::Step_Motor_Initialize_Direction()const
 	digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Dir, Stepper_Motor_Paper_Feed_UP_Initialize_Dir);
 	digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Dir, Stepper_Motor_Probe_Initialize_Dir);
 	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, Stepper_Motor_Probe_Initialize_Dir);
-	digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Dir, Stepper_Motor_Paper_Feed_Work_Dir);
-	digitalWrite(Pin_Stepper_Motor_Paper_Feed_B_Dir, Stepper_Motor_Paper_Feed_Work_Dir);
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Dir, Stepper_Motor_Paper_Feed_A_Work_Dir);
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_B_Dir, Stepper_Motor_Paper_Feed_B_Work_Dir);
 }
 void Braille_Printer_Machine::Step_Motor_Work_Direction()const
 {
 	digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Dir, Stepper_Motor_Paper_Feed_UP_Work_Dir);
 	digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Dir, Stepper_Motor_Probe_Work_Dir);
 	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, Stepper_Motor_Probe_Work_Dir);
-	digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Dir, Stepper_Motor_Paper_Feed_Work_Dir);
-	digitalWrite(Pin_Stepper_Motor_Paper_Feed_B_Dir, Stepper_Motor_Paper_Feed_Work_Dir);
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Dir, Stepper_Motor_Paper_Feed_A_Work_Dir);
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_B_Dir, Stepper_Motor_Paper_Feed_B_Work_Dir);
 }
 bool Braille_Printer_Machine::Limited_Switch_Paper_Feed_UP_Trigged()const
 {
@@ -77,12 +77,14 @@ bool Braille_Printer_Machine::Limited_Switch_Press_Paper_Trigged()const
 		return false;
 	}
 }
-void Braille_Printer_Machine::Change_Probe_Direction()
-{
-	uint8_t direction_temp = m_Stepper_Motor_Probe_Initialize_Dir;
-	m_Stepper_Motor_Probe_Initialize_Dir = m_Stepper_Motor_Probe_Work_Dir;
-	m_Stepper_Motor_Probe_Work_Dir = direction_temp;
-}
+//void Braille_Printer_Machine::Change_Probe_Direction()
+//{
+//	uint8_t direction_temp = m_Stepper_Motor_Probe_Initialize_Dir;
+//	m_Stepper_Motor_Probe_Initialize_Dir = m_Stepper_Motor_Probe_Work_Dir;
+//	m_Stepper_Motor_Probe_Work_Dir = direction_temp;
+//	digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Dir, m_Stepper_Motor_Probe_Work_Dir);
+//	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+//}
 void Braille_Printer_Machine::Probe_Propulsion_Synchronize()const
 {
 	for (uint32_t i = 0; i < Stepper_Motor_Probe_Loop_Times_Synchronize; ++i)
@@ -109,7 +111,7 @@ Braille_Printer_Machine::Braille_Printer_Machine()
 {
 
 }
-void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Zero()const // Used when we print a Character Point
+void Braille_Printer_Machine::Braille_Printer_Machine_Character_Point_Zero()const // Used when we print a Character Point
 {
 	Print_Probe.write(Servo_Print_Probe_Default_Position);
 }
@@ -118,81 +120,223 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Zero
 // ===============
 // TODO: Need More Details Information
 //================
+void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Zero()const // Used when we print a Character Point
+{
+	//this->Probe_Propulsion_Synchronize();
+	//Print_Probe.write(Servo_Print_Probe_Default_Position);
+	//delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	//digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	//digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+}
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_One()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_One_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Two()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_Two_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Three()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_Three_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Four()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_Four_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Five()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_Five_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Six()const // Used when we print a Character Point
 {
 	Print_Probe.write(Servo_Print_Probe_Six_Position);
+	delay(Probe_Delay);
+	// Sync 
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	//this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Character_Point_Seven()const // Used when we print a Character Point
 {
+	//this->Probe_Propulsion_Synchronize();
 	Print_Probe.write(Servo_Print_Probe_Seven_Position);
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
 	this->Press_Paper_Synchronize();
-	this->Braille_Printer_Machine_Print_Character_Point_Zero();
-	this->Probe_Propulsion_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Initialize_Dir);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
+	delay(Probe_Delay);
+	//this->Press_Paper_Synchronize();
+	//delay(Probe_Delay);
+	this->Braille_Printer_Machine_Character_Point_Zero();
+	delay(Probe_Delay);
+	this->Press_Paper_Synchronize();
+	this->Press_Paper_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Skip_Space_Between_Character_Point()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Character_Point; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
-		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
+	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Character_Point; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
 	}
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Skip_Space_Between_Character_Word()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Character_Word; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
-		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
+	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Character_Word; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
 	}
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Change_Line()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Paper_Feed_Loop_Times_Line; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Step, HIGH);
@@ -202,10 +346,18 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Change_Line()
 		digitalWrite(Pin_Stepper_Motor_Paper_Feed_B_Step, LOW);
 		delayMicroseconds(this->m_Stepper_Motor_Paper_Feed_LOW_Dealyms);
 	}
-	this->Change_Probe_Direction();
+	//digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);   //when change line  use
+	//this->Press_Paper_Synchronize();
+	//this->Press_Paper_Synchronize();
+	//this->Press_Paper_Synchronize();
+	//this->Press_Paper_Synchronize();
+	//this->Change_Probe_Direction();
+
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Top()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Top; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Step, HIGH);
@@ -218,6 +370,8 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Top()
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Bottom()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Paper_Feed_Loop_Times_Margin_Page_Bottom; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Paper_Feed_A_Step, HIGH);
@@ -230,24 +384,42 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Bottom()
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Left()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Margin_Page_Left; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
-		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
+	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Margin_Page_Left; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
 	}
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Print_Margin_Page_Right()
 {
+	this->Braille_Printer_Machine_Print_Character_Point_Zero();
+	delay(Probe_Delay);
+	digitalWrite(Pin_Stepper_Motor_Press_Paper_Dir, m_Stepper_Motor_Probe_Work_Dir);
+
 	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Margin_Page_Right; ++i)
 	{
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
-		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
+	for (uint32_t i = 0; i < this->m_Stepper_Motor_Probe_Loop_Times_Margin_Page_Right; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
 		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
 		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
 	}
@@ -290,13 +462,13 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Default_Initialization()co
 	Print_Probe.write(Servo_Print_Probe_Default_Position);
 	this->Step_Motor_Open_Enable();
 	this->Step_Motor_Initialize_Direction();
-	while (this->Limited_Switch_Paper_Feed_UP_Trigged() != true)
+	/*while (this->Limited_Switch_Paper_Feed_UP_Trigged() != true)
 	{
-		digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Step, HIGH);
-		delayMicroseconds(Stepper_Motor_Paper_Feed_UP_HIGH_Dealyms);
-		digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Step, LOW);
-		delayMicroseconds(Stepper_Motor_Paper_Feed_UP_LOW_Dealyms);
-	}
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Step, HIGH);
+	delayMicroseconds(Stepper_Motor_Paper_Feed_UP_HIGH_Dealyms);
+	digitalWrite(Pin_Stepper_Motor_Paper_Feed_UP_Step, LOW);
+	delayMicroseconds(Stepper_Motor_Paper_Feed_UP_LOW_Dealyms);
+	}*/
 
 	while (true)
 	{
@@ -321,10 +493,58 @@ void Braille_Printer_Machine::Braille_Printer_Machine_Default_Initialization()co
 		}
 	}
 	this->Step_Motor_Work_Direction();
+
+	for (uint32_t i = 0; i < Stepper_Motor_Probe_Loop_Times_Initialize_Position; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
+		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
+	this->Probe_Propulsion_Synchronize();
+	this->Probe_Propulsion_Synchronize();
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Customize_Initialization()const	// Used when we open or reset the Braille_Printer.
 {
+	Print_Probe.attach(Pin_Servo_Print_Probe);
+	Print_Probe.write(Servo_Print_Probe_Default_Position);
+	this->Step_Motor_Open_Enable();
+	this->Step_Motor_Initialize_Direction();
+	while (true)
+	{
 
+		if (this->Limited_Switch_Probe_Propulsion_Trigged() != true)
+		{
+			digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
+			delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
+			digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+			delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+		}
+		if (this->Limited_Switch_Press_Paper_Trigged() != true)
+		{
+			digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+			delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
+			digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
+			delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+		}
+		if ((this->Limited_Switch_Probe_Propulsion_Trigged() == true) && (this->Limited_Switch_Press_Paper_Trigged()))
+		{
+			break;
+		}
+	}
+	this->Step_Motor_Work_Direction();
+
+	for (uint32_t i = 0; i < Stepper_Motor_Probe_Loop_Times_Initialize_Position; ++i)
+	{
+		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, HIGH);
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, HIGH);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_HIGH_Dealyms);
+		digitalWrite(Pin_Stepper_Motor_Probe_Propulsion_Step, LOW);
+		digitalWrite(Pin_Stepper_Motor_Press_Paper_Step, LOW);
+		delayMicroseconds(this->m_Stepper_Motor_Probe_LOW_Dealyms);
+	}
 }
 void Braille_Printer_Machine::Braille_Printer_Machine_Feed_Paper()const	// Used when we feed paper.
 {
