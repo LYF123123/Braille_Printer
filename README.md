@@ -1,2 +1,2 @@
 # Braille_Printer
-Just a Demo
+A portotype device for printing Chinese into Braille 
